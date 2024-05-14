@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $escaper \Magento\Framework\Escaper
+ */
+?>
+<!-- TODO: remove block-compare and add own style -->
+<div class="block block-compare block-shipping-remaining-cost"
+     data-bind="scope: 'shippingRemainingCost'"
+     data-role="shipping-remaining-cost-sidebar">
+    <div class="block-title">
+        <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2">
+            <?= $escaper->escapeHtml(__('Shipping Info')) ?>
+        </strong>
+    </div>
+    <div class="block-content">
+        <span data-bind="text: shippingRemainingCost().message"></span>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-role=shipping-remaining-cost-sidebar]": {
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+        }
+    }
+</script>
