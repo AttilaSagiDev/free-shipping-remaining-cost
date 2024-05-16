@@ -15,7 +15,7 @@
                 <arguments>
                     <argument name="jsLayout" xsi:type="array">
                         <item name="components" xsi:type="array">
-                            <item name="ShippingRemainingCost" xsi:type="array">
+                            <item name="shippingRemainingCost" xsi:type="array">
                                 <item name="component"
                                       xsi:type="string">Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost</item>
                             </item>

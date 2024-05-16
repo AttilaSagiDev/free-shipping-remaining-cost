@@ -36,7 +36,7 @@ class ShippingRemainingCost implements SectionSourceInterface
     {
         return [
             'message' => __('Test message'),
-            'random_test' => rand(10, 100)
+            'value' => rand(10, 100)
         ];
     }
 }

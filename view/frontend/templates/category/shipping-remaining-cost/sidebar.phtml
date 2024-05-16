@@ -14,18 +14,19 @@
      data-bind="scope: 'shippingRemainingCost'"
      data-role="shipping-remaining-cost-sidebar">
     <div class="block-title">
-        <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2">
+        <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2"><!-- //NOSONAR -->
             <?= $escaper->escapeHtml(__('Shipping Info')) ?>
         </strong>
     </div>
     <div class="block-content">
-        <span data-bind="text: shippingRemainingCost().message"></span>
+        <span data-bind="html: getRemainingMessage()"></span><br />
+        <span data-bind="html: getRandomValue()"></span>
     </div>
 </div>
 <script type="text/x-magento-init">
-    {
-        "[data-role=shipping-remaining-cost-sidebar]": {
-            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
-        }
+{
+    "[data-role=shipping-remaining-cost-sidebar]": {
+        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
     }
+}
 </script>
