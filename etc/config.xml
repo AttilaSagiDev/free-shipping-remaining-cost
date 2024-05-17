@@ -13,7 +13,7 @@
                 <enabled>0</enabled>
             </base_config>
             <common_config>
-                <use_free_shipping_method>1</use_free_shipping_method>
+                <use_free_shipping_method>0</use_free_shipping_method>
                 <custom_amount>100</custom_amount>
                 <show_if_cart_is_empty>0</show_if_cart_is_empty>
                 <show_success_message>0</show_success_message>

@@ -13,6 +13,18 @@ class ValidateConfigPlugin
     private const SECTION = 'free_shipping_remaining_cost_settings';
 
     /**
+     * Free shipping delivery method active path
+     */
+    private const XML_PATH_FREE_SHIPPING_METHOD_ENABLED = 'carriers/freeshipping/active';
+
+    /**
+     * Free shipping delivery method amount path
+     */
+    private const XML_PATH_FREE_SHIPPING_METHOD_AMOUNT = 'carriers/freeshipping/free_shipping_subtotal';
+
+    /**
+     * Around save
+     *
      * @param Config $subject
      * @param \Closure $proceed
      * @return Config
@@ -27,7 +39,14 @@ class ValidateConfigPlugin
             if ($this->checkUseFreeShippingMethodValue($currentConfigData, 'value')
                 || $this->checkUseFreeShippingMethodValue($currentConfigData, 'inherit')
             ) {
-                throw new LocalizedException(__('Use Free Shipping Method check'));
+                if (!$subject->getConfigDataValue(self::XML_PATH_FREE_SHIPPING_METHOD_ENABLED)) {
+                    throw new LocalizedException(__('Free Shipping delivery method disabled'));
+                }
+                if (empty($subject->getConfigDataValue(self::XML_PATH_FREE_SHIPPING_METHOD_AMOUNT))) {
+                    throw new LocalizedException(
+                        __('Free Shipping delivery method minimum order amount cannot be empty or zero')
+                    );
+                }
             }
         }
 

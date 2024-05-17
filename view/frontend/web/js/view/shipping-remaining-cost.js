@@ -6,7 +6,7 @@
 define([
     'uiComponent',
     'Magento_Customer/js/customer-data'
-], function(Component, customerData) {
+], function (Component, customerData) {
     'use strict';
 
     return Component.extend({
@@ -14,7 +14,7 @@ define([
         /**
          * @inheritdoc
          */
-        initialize: function() {
+        initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
             console.log(this.shippingRemainingCost());
@@ -25,7 +25,7 @@ define([
          *
          * @return {String}
          */
-        getRemainingMessage: function() {
+        getRemainingMessage: function () {
             console.log(this.shippingRemainingCost());
             console.log(typeof this.shippingRemainingCost().message);
             return this.shippingRemainingCost().message;
@@ -36,7 +36,7 @@ define([
          *
          * @return {Number}
          */
-        getRandomValue: function() {
+        getRandomValue: function () {
             console.log(this.shippingRemainingCost());
             console.log(typeof this.shippingRemainingCost().value);
             return this.shippingRemainingCost().value;
