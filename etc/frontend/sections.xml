@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="checkout/cart/add">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/delete">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/updatePost">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/updateItemOptions">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/couponPost">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/estimatePost">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/cart/estimateUpdatePost">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/sidebar/removeItem">
+        <section name="shipping-remaining-cost"/>
+    </action>
+    <action name="checkout/sidebar/updateItemQty">
+        <section name="shipping-remaining-cost"/>
+    </action>
+</config>
