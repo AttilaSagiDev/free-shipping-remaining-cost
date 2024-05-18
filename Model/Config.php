@@ -81,4 +81,30 @@ class Config implements ConfigInterface
             ScopeInterface::SCOPE_STORE
         );
     }
+
+    /**
+     * Check if Magento free shipping delivery method enabled
+     *
+     * @return bool
+     */
+    public function isFreeShippingMethodEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_FREE_SHIPPING_METHOD_ENABLED,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Get Magento free shipping delivery method minimum order amount
+     *
+     * @return float
+     */
+    public function getFreeShippingMethodAmount(): float
+    {
+        return (float)$this->scopeConfig->getValue(
+            self::XML_PATH_FREE_SHIPPING_METHOD_AMOUNT,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
 }

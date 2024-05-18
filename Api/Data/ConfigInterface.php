@@ -33,6 +33,16 @@ interface ConfigInterface
         = 'free_shipping_remaining_cost_settings/common_config/show_if_cart_is_empty';
 
     /**
+     * Free shipping delivery method active path
+     */
+    public const XML_PATH_FREE_SHIPPING_METHOD_ENABLED = 'carriers/freeshipping/active';
+
+    /**
+     * Free shipping delivery method amount path
+     */
+    public const XML_PATH_FREE_SHIPPING_METHOD_AMOUNT = 'carriers/freeshipping/free_shipping_subtotal';
+
+    /**
      * Check if module is enabled
      *
      * @return bool
@@ -59,4 +69,18 @@ interface ConfigInterface
      * @return bool
      */
     public function isShowIfCartEmpty(): bool;
+
+    /**
+     * Check if Magento free shipping delivery method enabled
+     *
+     * @return bool
+     */
+    public function isFreeShippingMethodEnabled(): bool;
+
+    /**
+     * Get Magento free shipping delivery method minimum order amount
+     *
+     * @return float
+     */
+    public function getFreeShippingMethodAmount(): float;
 }

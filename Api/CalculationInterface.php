@@ -13,7 +13,7 @@ interface CalculationInterface
     /**
      * Get remaining cost message
      *
-     * @return string
+     * @return array
      */
-    public function getRemainingCostMessage(): string;
+    public function getRemainingCostMessage(): array;
 }

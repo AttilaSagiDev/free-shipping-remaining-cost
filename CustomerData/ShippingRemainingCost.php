@@ -36,9 +36,6 @@ class ShippingRemainingCost implements SectionSourceInterface
      */
     public function getSectionData(): array
     {
-        return [
-            'message' => $this->calculation->getRemainingCostMessage(),
-            'value' => rand(10, 100)
-        ];
+        return $this->calculation->getRemainingCostMessage();
     }
 }
