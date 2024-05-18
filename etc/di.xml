@@ -9,4 +9,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Space\FreeShippingRemainingCost\Api\Data\ConfigInterface"
                 type="Space\FreeShippingRemainingCost\Model\Config" />
+    <preference for="Space\FreeShippingRemainingCost\Api\CalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Calculation" />
 </config>

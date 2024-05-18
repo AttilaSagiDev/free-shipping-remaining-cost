@@ -50,13 +50,31 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable to show free shipping information text if the cart is empty.</comment>
                 </field>
-                <field id="show_success_message" translate="label comment" type="select" sortOrder="40"
+            </group>
+            <group id="display_config" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Display</label>
+                <field id="block_title" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Block Title</label>
+                    <validate>required-entry</validate>
+                    <comment>The title of the sidebar's free shipping notification block.</comment>
+                </field>
+                <field id="notification_message" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notification Text</label>
+                    <validate>required-entry</validate>
+                    <comment>
+                        <![CDATA[The notification text which will be displayed. Please note that the "%s" will be replaced with the price, so you have to add it in the proper place within the text. You can use HTML tags also.]]>
+                    </comment>
+                </field>
+                <field id="show_success_message" translate="label comment" type="select" sortOrder="30"
                        showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Show Success Message</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable to show the success message.</comment>
                 </field>
-                <field id="success_message" translate="label comment" type="text" sortOrder="50"
+                <field id="success_message" translate="label comment" type="text" sortOrder="40"
                        showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Success Message</label>
                     <validate>required-entry</validate>

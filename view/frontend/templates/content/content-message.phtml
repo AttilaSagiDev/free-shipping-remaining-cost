@@ -11,7 +11,7 @@
 ?>
 <div class="block block-shipping-remaining-cost-message"
      data-bind="scope: 'shippingRemainingCost'"
-     data-role="shipping-remaining-cost-sidebar">
+     data-role="shipping-remaining-cost-message">
     <div class="block-content">
         <span data-bind="html: getRemainingMessage()"></span><br />
         <span data-bind="html: getRandomValue()"></span>
@@ -19,7 +19,7 @@
 </div>
 <script type="text/x-magento-init">
 {
-    "[data-role=shipping-remaining-cost-sidebar]": {
+    "[data-role=shipping-remaining-cost-message]": {
         "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
     }
 }
