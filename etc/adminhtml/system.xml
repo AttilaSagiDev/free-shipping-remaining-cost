@@ -19,11 +19,69 @@
             <group id="base_config" translate="label" type="text" sortOrder="10" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label>Configuration</label>
-                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
-                       showInStore="1" canRestore="1">
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Extension</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Enable extension.</comment>
+                </field>
+            </group>
+            <group id="common_config" translate="label" type="text" sortOrder="20" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Common Settings</label>
+                <field id="use_free_shipping_method" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Use built-in free shipping method amount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to use Magento free shipping method amount. Note: the free shipping method has to be enabled and set.</comment>
+                </field>
+                <field id="custom_amount" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Custom amount amount</label>
+                    <validate>validate-greater-than-zero validate-number required-entry</validate>
+                    <comment>Custom amount for free shipping calculation.</comment>
+                    <depends>
+                        <field id="use_free_shipping_method">0</field>
+                    </depends>
+                </field>
+                <field id="show_if_cart_is_empty" translate="label comment" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show if Cart is Empty</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to show free shipping information text if the cart is empty.</comment>
+                </field>
+            </group>
+            <group id="display_config" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Display</label>
+                <field id="block_title" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Block Title</label>
+                    <validate>required-entry</validate>
+                    <comment>The title of the sidebar's free shipping notification block.</comment>
+                </field>
+                <field id="notification_message" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notification Text</label>
+                    <validate>required-entry</validate>
+                    <comment>
+                        <![CDATA[The notification text which will be displayed. Please note that the "%s" will be replaced with the price, so you have to add it in the proper place within the text. You can use HTML tags also.]]>
+                    </comment>
+                </field>
+                <field id="show_success_message" translate="label comment" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show Success Message</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to show the success message.</comment>
+                </field>
+                <field id="success_message" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Success Message</label>
+                    <validate>required-entry</validate>
+                    <comment>The success message if free shipping is available.</comment>
+                    <depends>
+                        <field id="show_success_message">1</field>
+                    </depends>
                 </field>
             </group>
         </section>

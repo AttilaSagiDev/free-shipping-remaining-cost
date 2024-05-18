@@ -12,6 +12,19 @@
             <base_config>
                 <enabled>0</enabled>
             </base_config>
+            <common_config>
+                <use_free_shipping_method>0</use_free_shipping_method>
+                <custom_amount>100</custom_amount>
+                <show_if_cart_is_empty>0</show_if_cart_is_empty>
+            </common_config>
+            <display_config>
+                <block_title>Free Shipping Info</block_title>
+                <notification_message>
+                    <![CDATA[You need to add %s more to your cart, to gain free shipping.]]>
+                </notification_message>
+                <show_success_message>0</show_success_message>
+                <success_message><![CDATA[Free shipping is available.]]></success_message>
+            </display_config>
         </free_shipping_remaining_cost_settings>
     </default>
 </config>

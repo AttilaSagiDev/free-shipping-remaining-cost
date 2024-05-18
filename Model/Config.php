@@ -42,4 +42,43 @@ class Config implements ConfigInterface
             ScopeInterface::SCOPE_STORE
         );
     }
+
+    /**
+     * Check using Magento free shipping delivery method for amount
+     *
+     * @return bool
+     */
+    public function isUseFreeShippingAmount(): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_USE_FREE_SHIPPING_AMOUNT,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Get custom amount for calculation
+     *
+     * @return float
+     */
+    public function getCustomAmount(): float
+    {
+        return (float)$this->scopeConfig->getValue(
+            self::XML_PATH_CUSTOM_AMOUNT,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Show if cart is empty
+     *
+     * @return bool
+     */
+    public function isShowIfCartEmpty(): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_SHOW_IF_CART_EMPTY,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
 }

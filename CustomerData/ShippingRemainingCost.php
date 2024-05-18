@@ -9,22 +9,24 @@ declare(strict_types=1);
 namespace Space\FreeShippingRemainingCost\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Psr\Log\LoggerInterface;
+use Space\FreeShippingRemainingCost\Model\Service\Calculation;
 
 class ShippingRemainingCost implements SectionSourceInterface
 {
     /**
-     * @var LoggerInterface
+     * @var Calculation
      */
-    private LoggerInterface $logger;
+    private Calculation $calculation;
 
     /**
-     * @param LoggerInterface $logger
+     * Constructor
+     *
+     * @param Calculation $calculation
      */
     public function __construct(
-        LoggerInterface $logger
+        Calculation $calculation
     ) {
-        $this->logger = $logger;
+        $this->calculation = $calculation;
     }
 
     /**
@@ -35,7 +37,7 @@ class ShippingRemainingCost implements SectionSourceInterface
     public function getSectionData(): array
     {
         return [
-            'message' => __('Test message'),
+            'message' => $this->calculation->getRemainingCostMessage(),
             'value' => rand(10, 100)
         ];
     }

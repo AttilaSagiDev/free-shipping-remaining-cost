@@ -16,9 +16,47 @@ interface ConfigInterface
     public const XML_PATH_ENABLED = 'free_shipping_remaining_cost_settings/base_config/enabled';
 
     /**
+     * Magento free shipping amount config path
+     */
+    public const XML_PATH_USE_FREE_SHIPPING_AMOUNT
+        = 'free_shipping_remaining_cost_settings/common_config/use_free_shipping_method';
+
+    /**
+     * Custom amount config path
+     */
+    public const XML_PATH_CUSTOM_AMOUNT = 'free_shipping_remaining_cost_settings/common_config/custom_amount';
+
+    /**
+     * Custom amount config path
+     */
+    public const XML_PATH_SHOW_IF_CART_EMPTY
+        = 'free_shipping_remaining_cost_settings/common_config/show_if_cart_is_empty';
+
+    /**
      * Check if module is enabled
      *
      * @return bool
      */
     public function isEnabled(): bool;
+
+    /**
+     * Check using Magento free shipping delivery method for amount
+     *
+     * @return bool
+     */
+    public function isUseFreeShippingAmount(): bool;
+
+    /**
+     * Get custom amount for calculation
+     *
+     * @return float
+     */
+    public function getCustomAmount(): float;
+
+    /**
+     * Show if cart is empty
+     *
+     * @return bool
+     */
+    public function isShowIfCartEmpty(): bool;
 }
