@@ -10,6 +10,7 @@ namespace Space\FreeShippingRemainingCost\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Space\FreeShippingRemainingCost\Model\Service\Calculation;
+use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 
 class ShippingRemainingCost implements SectionSourceInterface
 {
@@ -19,14 +20,22 @@ class ShippingRemainingCost implements SectionSourceInterface
     private Calculation $calculation;
 
     /**
+     * @var ConfigInterface
+     */
+    private ConfigInterface $config;
+
+    /**
      * Constructor
      *
      * @param Calculation $calculation
+     * @param ConfigInterface $config
      */
     public function __construct(
-        Calculation $calculation
+        Calculation $calculation,
+        ConfigInterface $config
     ) {
         $this->calculation = $calculation;
+        $this->config = $config;
     }
 
     /**
@@ -36,9 +45,6 @@ class ShippingRemainingCost implements SectionSourceInterface
      */
     public function getSectionData(): array
     {
-        return [
-            'message' => $this->calculation->getRemainingCostMessage(),
-            'value' => rand(10, 100)
-        ];
+        return $this->config->isEnabled() ? $this->calculation->getRemainingCostMessage() : [];
     }
 }
