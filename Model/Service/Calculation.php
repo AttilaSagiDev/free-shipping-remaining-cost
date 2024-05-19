@@ -59,8 +59,9 @@ class Calculation implements CalculationInterface
     {
         $remainingCost = [];
         try {
-            $remainingCost['message'] = 'CalculationInterface ' . $this->getRemainingCostValue();
-            $remainingCost['value'] = $this->getRemainingCostValue();
+            $remainingCostValue = $this->getRemainingCostValue();
+            $remainingCost['message'] = $this->getMessage($remainingCostValue);
+            $remainingCost['value'] = $remainingCostValue;
         } catch (LocalizedException|NoSuchEntityException $exception) {
             $this->logger->error($exception->getMessage());
         }
@@ -77,20 +78,36 @@ class Calculation implements CalculationInterface
      */
     private function getRemainingCostValue(): float
     {
-        $remainingCost = 0;
+        $remainingCostValue = 0;
 
         $this->logger->debug('quote id: ' . $this->checkoutSession->getQuote()->getId());
-        $this->logger->debug('rule ids: ' . $this->checkoutSession->getQuote()->getAppliedRuleIds());
-
-        $subtotal = $this->checkoutSession->getQuote()->getSubtotalWithDiscount();
+        $quote = $this->checkoutSession->getQuote();
+        $subtotal = $quote->getSubtotalWithDiscount();
         if ($this->config->isUseFreeShippingAmount()
             && $this->config->isFreeShippingMethodEnabled()
             && $this->config->getFreeShippingMethodAmount() > 0
             && $subtotal > 0
+            && !$quote->getShippingAddress()->getFreeShipping()
         ) {
-            $remainingCost = $this->config->getFreeShippingMethodAmount() - $subtotal;
+            $remainingCostValue = $this->config->getFreeShippingMethodAmount() - $subtotal;
         }
 
-        return max($remainingCost, 0);
+        return max($remainingCostValue, 0);
+    }
+
+    /**
+     * Get message
+     *
+     * @param float $remainingCost
+     * @return string
+     */
+    private function getMessage(float $remainingCost): string
+    {
+        $this->logger->debug('test: ' . $this->config->getSuccessMessage());
+        $this->logger->debug('test2: ' . $this->config->getNotificationMessage());
+
+        return $remainingCost > 0
+            ? str_replace('%s', (string)$remainingCost, $this->config->getNotificationMessage())
+            : $this->config->getSuccessMessage();
     }
 }

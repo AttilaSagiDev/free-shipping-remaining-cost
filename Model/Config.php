@@ -107,4 +107,60 @@ class Config implements ConfigInterface
             ScopeInterface::SCOPE_STORE
         );
     }
+
+    /**
+     * Get block title
+     *
+     * @return string
+     */
+    public function getBlockTitle(): string
+    {
+        return (string)$this->scopeConfig->getValue(
+            self::XML_PATH_DISPLAY_BLOCK_TITLE,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Get notification message
+     *
+     * @return string
+     */
+    public function getNotificationMessage(): string
+    {
+        return (string)$this->scopeConfig->getValue(
+            self::XML_PATH_DISPLAY_NOTIFICATION_MESSAGE,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Check if show success message
+     *
+     * @return bool
+     */
+    public function isShowSuccessMessage(): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            self::XML_PATH_DISPLAY_SHOW_SUCCESS_MESSAGE,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Get success message
+     *
+     * @return string
+     */
+    public function getSuccessMessage(): string
+    {
+        if ($this->isShowSuccessMessage()) {
+            return (string)$this->scopeConfig->getValue(
+                self::XML_PATH_DISPLAY_SUCCESS_MESSAGE,
+                ScopeInterface::SCOPE_STORE
+            );
+        }
+
+        return '';
+    }
 }
