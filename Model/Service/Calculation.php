@@ -12,7 +12,6 @@ use Space\FreeShippingRemainingCost\Api\CalculationInterface;
 use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\Phrase;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -80,7 +79,7 @@ class Calculation implements CalculationInterface
     {
         $remainingCostValue = 0;
 
-        $this->logger->debug('quote id: ' . $this->checkoutSession->getQuote()->getId());
+        $this->logger->debug('Calculation INFO quote id: ' . $this->checkoutSession->getQuote()->getId());
         $quote = $this->checkoutSession->getQuote();
         $subtotal = $quote->getSubtotalWithDiscount();
         if ($this->config->isUseFreeShippingAmount()
@@ -103,9 +102,6 @@ class Calculation implements CalculationInterface
      */
     private function getMessage(float $remainingCost): string
     {
-        $this->logger->debug('test: ' . $this->config->getSuccessMessage());
-        $this->logger->debug('test2: ' . $this->config->getNotificationMessage());
-
         return $remainingCost > 0
             ? str_replace('%s', (string)$remainingCost, $this->config->getNotificationMessage())
             : $this->config->getSuccessMessage();

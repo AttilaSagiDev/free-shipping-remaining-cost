@@ -10,7 +10,8 @@
     <body>
         <referenceContainer name="content.top">
             <block name="shipping.remaining.cost.sidebar"
-                   template="Space_FreeShippingRemainingCost::content/content-message.phtml">
+                   template="Space_FreeShippingRemainingCost::content/content-message.phtml"
+                   ifconfig="free_shipping_remaining_cost_settings/base_config/enabled">
                 <arguments>
                     <argument name="jsLayout" xsi:type="array">
                         <item name="components" xsi:type="array">
