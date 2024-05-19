@@ -11,6 +11,7 @@ namespace Space\FreeShippingRemainingCost\Model\Service;
 use Space\FreeShippingRemainingCost\Api\CalculationInterface;
 use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
+use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -28,6 +29,11 @@ class Calculation implements CalculationInterface
     private ConfigInterface $config;
 
     /**
+     * @var PriceCurrencyInterface
+     */
+    private PriceCurrencyInterface $priceCurrency;
+
+    /**
      * @var LoggerInterface
      */
     private LoggerInterface $logger;
@@ -37,15 +43,18 @@ class Calculation implements CalculationInterface
      *
      * @param Session $checkoutSession
      * @param ConfigInterface $config
+     * @param PriceCurrencyInterface $priceCurrency
      * @param LoggerInterface $logger
      */
     public function __construct(
         Session $checkoutSession,
         ConfigInterface $config,
+        PriceCurrencyInterface $priceCurrency,
         LoggerInterface $logger
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->config = $config;
+        $this->priceCurrency = $priceCurrency;
         $this->logger = $logger;
     }
 
@@ -103,7 +112,20 @@ class Calculation implements CalculationInterface
     private function getMessage(float $remainingCost): string
     {
         return $remainingCost > 0
-            ? str_replace('%s', (string)$remainingCost, $this->config->getNotificationMessage())
+            ? $this->getFormattedMessage($remainingCost)
             : $this->config->getSuccessMessage();
+    }
+
+    /**
+     * Get formated message
+     *
+     * @param float $remainingCost
+     * @return string
+     */
+    private function getFormattedMessage(float $remainingCost): string
+    {
+        $remainingCost = $this->priceCurrency->format($remainingCost);
+
+        return str_replace('%s', $remainingCost, $this->config->getNotificationMessage());
     }
 }
