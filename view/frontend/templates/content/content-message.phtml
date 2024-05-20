@@ -6,14 +6,22 @@
 
 /**
  * @var $block \Magento\Framework\View\Element\Template
+ * @var $viewModel \Space\FreeShippingRemainingCost\ViewModel\ContentMessage
  * @var $escaper \Magento\Framework\Escaper
  */
+
+$viewModel = $block->getData('view_model');
 ?>
 <div class="block block-shipping-remaining-cost-message"
      data-bind="scope: 'shippingRemainingCost'"
      data-role="shipping-remaining-cost-message">
     <div class="block-content">
-        <span data-bind="html: getRemainingMessage()"></span><br />
+        <!-- ko if: getRemainingMessage() -->
+            <span data-bind="html: getRemainingMessage()"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: getRemainingMessage() -->
+            <span><?= $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']) ?></span>
+        <!-- /ko -->
     </div>
 </div>
 <script type="text/x-magento-init">

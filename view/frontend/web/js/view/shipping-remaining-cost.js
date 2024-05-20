@@ -17,7 +17,6 @@ define([
         initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
-            console.log(this.shippingRemainingCost());
         },
 
         /**
@@ -26,20 +25,16 @@ define([
          * @return {String}
          */
         getRemainingMessage: function () {
+            console.log('Object');
             console.log(this.shippingRemainingCost());
+
+            console.log('Message');
             console.log(typeof this.shippingRemainingCost().message);
             return this.shippingRemainingCost().message;
         },
 
-        /**
-         * Get random value
-         *
-         * @return {Number}
-         */
-        getRandomValue: function () {
-            console.log(this.shippingRemainingCost());
+        isCartEmpty: function () {
             console.log(typeof this.shippingRemainingCost().value);
-            return this.shippingRemainingCost().value;
         }
     });
 });

@@ -21,6 +21,9 @@
                             </item>
                         </item>
                     </argument>
+                    <argument name="view_model" xsi:type="object">
+                        Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+                    </argument>
                 </arguments>
             </block>
         </referenceContainer>
