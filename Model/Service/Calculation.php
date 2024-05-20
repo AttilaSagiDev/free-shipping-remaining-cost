@@ -108,7 +108,6 @@ class Calculation implements CalculationInterface
             $remainingCostValue = 0;
         }
 
-
         return max($remainingCostValue, 0);
     }
 
