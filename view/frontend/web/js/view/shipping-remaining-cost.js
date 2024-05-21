@@ -11,12 +11,22 @@ define([
 
     return Component.extend({
 
+        defaults: {
+            isCartEmpty: 0
+        },
+
         /**
          * @inheritdoc
          */
         initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
+            console.log('this');
+            console.log(this);
+
+
+            console.log('Object');
+            console.log(this.shippingRemainingCost());
         },
 
         /**
@@ -25,16 +35,22 @@ define([
          * @return {String}
          */
         getRemainingMessage: function () {
-            console.log('Object');
-            console.log(this.shippingRemainingCost());
-
             console.log('Message');
             console.log(typeof this.shippingRemainingCost().message);
             return this.shippingRemainingCost().message;
         },
 
-        isCartEmpty: function () {
-            console.log(typeof this.shippingRemainingCost().value);
+        /**
+         * Check to show message if cart is empty
+         *
+         * @return {Number}
+         */
+        showIfCartEmpty: function () {
+            if (parseInt(this.isShowIfCartEmpty)) {
+                this.isCartEmpty = 1;
+            }
+
+            return this.isCartEmpty;
         }
     });
 });

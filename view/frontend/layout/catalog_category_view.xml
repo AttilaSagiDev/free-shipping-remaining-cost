@@ -13,14 +13,6 @@
                    template="Space_FreeShippingRemainingCost::content/content-message.phtml"
                    ifconfig="free_shipping_remaining_cost_settings/base_config/enabled">
                 <arguments>
-                    <argument name="jsLayout" xsi:type="array">
-                        <item name="components" xsi:type="array">
-                            <item name="shippingRemainingCost" xsi:type="array">
-                                <item name="component"
-                                      xsi:type="string">Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost</item>
-                            </item>
-                        </item>
-                    </argument>
                     <argument name="view_model" xsi:type="object">
                         Space\FreeShippingRemainingCost\ViewModel\ContentMessage
                     </argument>

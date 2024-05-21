@@ -39,6 +39,16 @@ class ContentMessage implements ArgumentInterface
     }
 
     /**
+     * Show if cart is empty
+     *
+     * @return int
+     */
+    public function isShowIfCartEmpty(): int
+    {
+        return (int)$this->config->isShowIfCartEmpty();
+    }
+
+    /**
      * Show base message if cart is empty
      *
      * @return string

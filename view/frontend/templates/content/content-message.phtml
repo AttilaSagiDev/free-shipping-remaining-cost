@@ -19,15 +19,22 @@ $viewModel = $block->getData('view_model');
         <!-- ko if: getRemainingMessage() -->
             <span data-bind="html: getRemainingMessage()"></span>
         <!-- /ko -->
-        <!-- ko ifnot: getRemainingMessage() -->
-            <span><?= $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']) ?></span>
+        <!-- ko if: showIfCartEmpty() -->
+            <span data-bind="html: 'cart is empty'"></span>
         <!-- /ko -->
     </div>
 </div>
 <script type="text/x-magento-init">
-{
-    "[data-role=shipping-remaining-cost-message]": {
-        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+    {
+        "[data-role=shipping-remaining-cost-message]": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "shippingRemainingCost": {
+                        "component": "Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost",
+                        "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty())?>"
+                    }
+                }
+            }
+        }
     }
-}
 </script>
