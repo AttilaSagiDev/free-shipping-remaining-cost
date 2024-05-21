@@ -11,6 +11,7 @@
  */
 
 $viewModel = $block->getData('view_model');
+$baseMessage = $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']);
 ?>
 <div class="block block-shipping-remaining-cost-message"
      data-bind="scope: 'shippingRemainingCost'"
@@ -19,8 +20,8 @@ $viewModel = $block->getData('view_model');
         <!-- ko if: getRemainingMessage() -->
             <span data-bind="html: getRemainingMessage()"></span>
         <!-- /ko -->
-        <!-- ko if: showIfCartEmpty() -->
-            <span data-bind="html: 'cart is empty'"></span>
+        <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
+            <span data-bind="html: getDefaultRemainingMessage()"></span>
         <!-- /ko -->
     </div>
 </div>
@@ -31,7 +32,8 @@ $viewModel = $block->getData('view_model');
                 "components": {
                     "shippingRemainingCost": {
                         "component": "Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost",
-                        "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty())?>"
+                        "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty()) ?>",
+                        "defaultMessage": <?= $viewModel->getDefaultMessage($baseMessage) ?>
                     }
                 }
             }

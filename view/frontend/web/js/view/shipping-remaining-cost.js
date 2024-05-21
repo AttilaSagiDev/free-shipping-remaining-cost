@@ -21,12 +21,6 @@ define([
         initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
-            console.log('this');
-            console.log(this);
-
-
-            console.log('Object');
-            console.log(this.shippingRemainingCost());
         },
 
         /**
@@ -35,9 +29,16 @@ define([
          * @return {String}
          */
         getRemainingMessage: function () {
-            console.log('Message');
-            console.log(typeof this.shippingRemainingCost().message);
             return this.shippingRemainingCost().message;
+        },
+
+        /**
+         * Get default remaining message
+         *
+         * @return {String}
+         */
+        getDefaultRemainingMessage: function () {
+            return this.defaultMessage;
         },
 
         /**

@@ -10,6 +10,7 @@ namespace Space\FreeShippingRemainingCost\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
+use Magento\Framework\Serialize\Serializer\Json;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 
 class ContentMessage implements ArgumentInterface
@@ -20,6 +21,11 @@ class ContentMessage implements ArgumentInterface
     private CalculationHelper $calculationHelper;
 
     /**
+     * @var Json
+     */
+    private Json $json;
+
+    /**
      * @var ConfigInterface
      */
     private ConfigInterface $config;
@@ -28,13 +34,16 @@ class ContentMessage implements ArgumentInterface
      * Constructor
      *
      * @param CalculationHelper $calculationHelper
+     * @param Json $json
      * @param ConfigInterface $config
      */
     public function __construct(
         CalculationHelper $calculationHelper,
+        Json $json,
         ConfigInterface $config
     ) {
         $this->calculationHelper = $calculationHelper;
+        $this->json = $json;
         $this->config = $config;
     }
 
@@ -46,6 +55,16 @@ class ContentMessage implements ArgumentInterface
     public function isShowIfCartEmpty(): int
     {
         return (int)$this->config->isShowIfCartEmpty();
+    }
+
+    /**
+     * Get default message
+     *
+     * @return string
+     */
+    public function getDefaultMessage($defaultMessage): string
+    {
+        return $this->json->serialize($defaultMessage);
     }
 
     /**
