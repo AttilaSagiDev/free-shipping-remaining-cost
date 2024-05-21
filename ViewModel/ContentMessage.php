@@ -60,9 +60,10 @@ class ContentMessage implements ArgumentInterface
     /**
      * Get default message
      *
+     * @param string $defaultMessage
      * @return string
      */
-    public function getDefaultMessage($defaultMessage): string
+    public function getDefaultMessage(string $defaultMessage): string
     {
         return $this->json->serialize($defaultMessage);
     }

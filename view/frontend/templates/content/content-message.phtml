@@ -33,7 +33,7 @@ $baseMessage = $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']);
                     "shippingRemainingCost": {
                         "component": "Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost",
                         "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty()) ?>",
-                        "defaultMessage": <?= $viewModel->getDefaultMessage($baseMessage) ?>
+                        "defaultMessage": <?= /* @noEscape */ $viewModel->getDefaultMessage($baseMessage) ?>
                     }
                 }
             }
