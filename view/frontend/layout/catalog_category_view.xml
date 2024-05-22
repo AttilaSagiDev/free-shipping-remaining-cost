@@ -17,6 +17,8 @@
                         Space\FreeShippingRemainingCost\ViewModel\ContentMessage
                     </argument>
                 </arguments>
+                <block name="shipping.remaining.cost.sidebar.script"
+                       template="Space_FreeShippingRemainingCost::script/script-init.phtml"/>
             </block>
         </referenceContainer>
     </body>
