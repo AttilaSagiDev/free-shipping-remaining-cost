@@ -6,20 +6,28 @@
 
 /**
  * @var $block \Magento\Framework\View\Element\Template
+ * @var $viewModel \Space\FreeShippingRemainingCost\ViewModel\ContentMessage
  * @var $escaper \Magento\Framework\Escaper
  */
+
+$viewModel = $block->getData('view_model');
 ?>
 <div class="block block-shipping-remaining-cost-message"
      data-bind="scope: 'shippingRemainingCost'"
      data-role="shipping-remaining-cost-message">
     <div class="block-content">
-        <span data-bind="html: getRemainingMessage()"></span><br />
+        <!-- ko if: getRemainingMessage() -->
+            <span data-bind="html: getRemainingMessage()"></span>
+        <!-- /ko -->
+        <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
+            <span data-bind="html: getDefaultRemainingMessage()"></span>
+        <!-- /ko -->
     </div>
 </div>
-<script type="text/x-magento-init">
-{
-    "[data-role=shipping-remaining-cost-message]": {
-        "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
-    }
-}
-</script>
+<?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.sidebar.script')
+        ->setData('view_model', $viewModel)
+        ->setData('scripId', '[data-role=shipping-remaining-cost-message]');
+?>
+<?php if ($scriptBlock): ?>
+    <?= $scriptBlock->toHtml() ?>
+<?php endif; ?>

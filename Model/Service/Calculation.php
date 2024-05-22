@@ -11,10 +11,11 @@ namespace Space\FreeShippingRemainingCost\Model\Service;
 use Space\FreeShippingRemainingCost\Api\CalculationInterface;
 use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
-use Magento\Framework\Pricing\PriceCurrencyInterface;
+use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Quote\Model\Quote;
 
 class Calculation implements CalculationInterface
 {
@@ -29,9 +30,9 @@ class Calculation implements CalculationInterface
     private ConfigInterface $config;
 
     /**
-     * @var PriceCurrencyInterface
+     * @var CalculationHelper
      */
-    private PriceCurrencyInterface $priceCurrency;
+    private CalculationHelper $calculationHelper;
 
     /**
      * @var LoggerInterface
@@ -43,18 +44,18 @@ class Calculation implements CalculationInterface
      *
      * @param Session $checkoutSession
      * @param ConfigInterface $config
-     * @param PriceCurrencyInterface $priceCurrency
+     * @param CalculationHelper $calculationHelper
      * @param LoggerInterface $logger
      */
     public function __construct(
         Session $checkoutSession,
         ConfigInterface $config,
-        PriceCurrencyInterface $priceCurrency,
+        CalculationHelper $calculationHelper,
         LoggerInterface $logger
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->config = $config;
-        $this->priceCurrency = $priceCurrency;
+        $this->calculationHelper = $calculationHelper;
         $this->logger = $logger;
     }
 
@@ -67,8 +68,10 @@ class Calculation implements CalculationInterface
     {
         $remainingCost = [];
         try {
-            $remainingCostValue = $this->getRemainingCostValue();
-            $remainingCost['message'] = $this->getMessage($remainingCostValue);
+            $quote = $this->checkoutSession->getQuote();
+            $subtotal = $quote->getSubtotalWithDiscount();
+            $remainingCostValue = $this->getRemainingCostValue($quote, (float)$subtotal);
+            $remainingCost['message'] = $this->getMessage($remainingCostValue, (float)$subtotal);
             $remainingCost['value'] = $remainingCostValue;
         } catch (LocalizedException|NoSuchEntityException $exception) {
             $this->logger->error($exception->getMessage());
@@ -80,24 +83,29 @@ class Calculation implements CalculationInterface
     /**
      * Get remaining cost value
      *
+     * @param Quote $quote
+     * @param float $subtotal
      * @return float
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
-    private function getRemainingCostValue(): float
+    private function getRemainingCostValue(Quote $quote, float $subtotal): float
     {
-        $remainingCostValue = 0;
+        $remainingCostValue = $this->config->getCustomAmount();
 
-        $this->logger->debug('Calculation INFO quote id: ' . $this->checkoutSession->getQuote()->getId());
-        $quote = $this->checkoutSession->getQuote();
-        $subtotal = $quote->getSubtotalWithDiscount();
         if ($this->config->isUseFreeShippingAmount()
             && $this->config->isFreeShippingMethodEnabled()
             && $this->config->getFreeShippingMethodAmount() > 0
-            && $subtotal > 0
+        ) {
+            $remainingCostValue = $this->config->getFreeShippingMethodAmount();
+        }
+
+        if ($subtotal > 0
             && !$quote->getShippingAddress()->getFreeShipping()
         ) {
-            $remainingCostValue = $this->config->getFreeShippingMethodAmount() - $subtotal;
+            $remainingCostValue = $this->config->isUseFreeShippingAmount()
+                ? $this->config->getFreeShippingMethodAmount() - $subtotal
+                : $remainingCostValue - $subtotal;
+        } elseif ($subtotal > 0 && $quote->getShippingAddress()->getFreeShipping()) {
+            $remainingCostValue = 0;
         }
 
         return max($remainingCostValue, 0);
@@ -107,25 +115,19 @@ class Calculation implements CalculationInterface
      * Get message
      *
      * @param float $remainingCost
+     * @param float $subtotal
      * @return string
      */
-    private function getMessage(float $remainingCost): string
+    private function getMessage(float $remainingCost, float $subtotal): string
     {
-        return $remainingCost > 0
-            ? $this->getFormattedMessage($remainingCost)
+        if (!$subtotal && $this->config->isShowIfCartEmpty()) {
+            return $this->calculationHelper->getFormattedMessage($remainingCost);
+        } elseif (!$subtotal && !$this->config->isShowIfCartEmpty()) {
+            return '';
+        }
+
+        return $remainingCost > 0 && $remainingCost > $subtotal
+            ? $this->calculationHelper->getFormattedMessage($remainingCost)
             : $this->config->getSuccessMessage();
-    }
-
-    /**
-     * Get formated message
-     *
-     * @param float $remainingCost
-     * @return string
-     */
-    private function getFormattedMessage(float $remainingCost): string
-    {
-        $remainingCost = $this->priceCurrency->format($remainingCost);
-
-        return str_replace('%s', $remainingCost, $this->config->getNotificationMessage());
     }
 }
