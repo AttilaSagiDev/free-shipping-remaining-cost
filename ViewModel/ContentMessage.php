@@ -10,6 +10,7 @@ namespace Space\FreeShippingRemainingCost\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 
@@ -19,6 +20,11 @@ class ContentMessage implements ArgumentInterface
      * @var CalculationHelper
      */
     private CalculationHelper $calculationHelper;
+
+    /**
+     * @var RequestInterface
+     */
+    private RequestInterface $request;
 
     /**
      * @var Json
@@ -34,15 +40,18 @@ class ContentMessage implements ArgumentInterface
      * Constructor
      *
      * @param CalculationHelper $calculationHelper
+     * @param RequestInterface $request
      * @param Json $json
      * @param ConfigInterface $config
      */
     public function __construct(
         CalculationHelper $calculationHelper,
+        RequestInterface $request,
         Json $json,
         ConfigInterface $config
     ) {
         $this->calculationHelper = $calculationHelper;
+        $this->request = $request;
         $this->json = $json;
         $this->config = $config;
     }

@@ -69,9 +69,9 @@ class Calculation implements CalculationInterface
         $remainingCost = [];
         try {
             $quote = $this->checkoutSession->getQuote();
-            $subtotal = $quote->getSubtotalWithDiscount();
-            $remainingCostValue = $this->getRemainingCostValue($quote, (float)$subtotal);
-            $remainingCost['message'] = $this->getMessage($remainingCostValue, (float)$subtotal);
+            $subtotal = $quote->getShippingAddress()->getSubtotalWithDiscount();
+            $remainingCostValue = $this->getRemainingCostValue($quote, $subtotal);
+            $remainingCost['message'] = $this->getMessage($remainingCostValue, $subtotal);
             $remainingCost['value'] = $remainingCostValue;
         } catch (LocalizedException|NoSuchEntityException $exception) {
             $this->logger->error($exception->getMessage());

@@ -25,6 +25,9 @@
                 <show_success_message>0</show_success_message>
                 <success_message><![CDATA[Free shipping is available.]]></success_message>
             </display_config>
+            <pages_config>
+                <pages>catalog_category_view</pages>
+            </pages_config>
         </free_shipping_remaining_cost_settings>
     </default>
 </config>
