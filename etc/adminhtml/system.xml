@@ -88,11 +88,20 @@
             <group id="pages_config" translate="label" type="text" sortOrder="40" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label>Pages</label>
-                <field id="pages" translate="label comment" type="multiselect" sortOrder="10"
+                <field id="pages_to_show" translate="label comment" type="multiselect" sortOrder="10"
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Page to Show notification</label>
+                    <label>Pages to Show notification</label>
                     <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Layouts</source_model>
                     <comment>Please select pages.</comment>
+                </field>
+                <field id="position_to_show" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Category Page Position</label>
+                    <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Position</source_model>
+                    <comment>Please select where to show notification on category pages.</comment>
+                    <depends>
+                        <field id="pages_to_show">catalog_category_view</field>
+                    </depends>
                 </field>
             </group>
         </section>

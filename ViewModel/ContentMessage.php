@@ -13,6 +13,8 @@ use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
+use Space\FreeShippingRemainingCost\Model\Config\Source\Layouts;
+use Space\FreeShippingRemainingCost\Model\Config\Source\Position;
 
 class ContentMessage implements ArgumentInterface
 {
@@ -54,6 +56,48 @@ class ContentMessage implements ArgumentInterface
         $this->request = $request;
         $this->json = $json;
         $this->config = $config;
+    }
+
+    /**
+     * Is show notification
+     *
+     * @return bool
+     */
+    public function isShow(): bool
+    {
+        if (!empty($this->config->getPagesToShow())
+            && in_array($this->request->getFullActionName(), $this->config->getPagesToShow())
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Is sidebar position
+     *
+     * @return bool
+     */
+    public function isSidebarPosition(): bool
+    {
+        if ($this->request->getFullActionName() === Layouts::LAYOUT_CATEGORY_PAGE
+            && $this->config->getPositionToShow() === Position::SHOW_IN_SIDEBAR
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get sidebar block title
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->config->getBlockTitle();
     }
 
     /**

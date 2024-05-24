@@ -9,8 +9,22 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content.top">
-            <block name="shipping.remaining.cost.sidebar"
+            <block name="shipping.remaining.cost.message"
                    template="Space_FreeShippingRemainingCost::content/content-message.phtml"
+                   ifconfig="free_shipping_remaining_cost_settings/base_config/enabled">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+                    </argument>
+                </arguments>
+                <block name="shipping.remaining.cost.message.script"
+                       template="Space_FreeShippingRemainingCost::script/script-init.phtml"/>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="sidebar.additional">
+            <block name="shipping.remaining.cost.sidebar"
+                   template="Space_FreeShippingRemainingCost::sidebar/sidebar-block.phtml"
                    ifconfig="free_shipping_remaining_cost_settings/base_config/enabled">
                 <arguments>
                     <argument name="view_model" xsi:type="object">
