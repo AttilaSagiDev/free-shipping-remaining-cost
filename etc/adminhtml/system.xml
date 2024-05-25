@@ -33,7 +33,8 @@
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Use built-in free shipping method amount</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Enable to use Magento free shipping method amount. Note: the free shipping method has to be enabled and set.</comment>
+                    <comment>Enable to use Magento free shipping method amount. Note: the free shipping method has to be enabled and set.
+                    </comment>
                 </field>
                 <field id="custom_amount" translate="label comment" type="text" sortOrder="20"
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
@@ -81,6 +82,25 @@
                     <comment>The success message if free shipping is available.</comment>
                     <depends>
                         <field id="show_success_message">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="pages_config" translate="label" type="text" sortOrder="40" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Pages</label>
+                <field id="pages_to_show" translate="label comment" type="multiselect" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Pages to Show notification</label>
+                    <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Layouts</source_model>
+                    <comment>Please select pages.</comment>
+                </field>
+                <field id="position_to_show" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Category Page Position</label>
+                    <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Position</source_model>
+                    <comment>Please select where to show notification on category pages.</comment>
+                    <depends>
+                        <field id="pages_to_show">catalog_category_view</field>
                     </depends>
                 </field>
             </group>

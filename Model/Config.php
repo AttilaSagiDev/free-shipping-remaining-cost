@@ -163,4 +163,32 @@ class Config implements ConfigInterface
 
         return '';
     }
+
+    /**
+     * Get pages to show
+     *
+     * @return array
+     */
+    public function getPagesToShow(): array
+    {
+        $value = $this->scopeConfig->getValue(
+            self::XML_PATH_PAGES_TO_SHOW,
+            ScopeInterface::SCOPE_STORE
+        );
+
+        return $value ? explode(',', $value) : [];
+    }
+
+    /**
+     * Get position to show on category pages
+     *
+     * @return int
+     */
+    public function getPositionToShow(): int
+    {
+        return (int)$this->scopeConfig->getValue(
+            self::XML_PATH_POSITION_TO_SHOW,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
 }

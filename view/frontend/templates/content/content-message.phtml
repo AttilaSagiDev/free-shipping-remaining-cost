@@ -12,22 +12,24 @@
 
 $viewModel = $block->getData('view_model');
 ?>
-<div class="block block-shipping-remaining-cost-message"
-     data-bind="scope: 'shippingRemainingCost'"
-     data-role="shipping-remaining-cost-message">
-    <div class="block-content">
-        <!-- ko if: getRemainingMessage() -->
+<?php if ($viewModel->isShow() && !$viewModel->isSidebarPosition()): ?>
+    <div class="block block-shipping-remaining-cost-message"
+         data-bind="scope: 'shippingRemainingCost'"
+         data-role="shipping-remaining-cost-message">
+        <div class="block-content">
+            <!-- ko if: getRemainingMessage() -->
             <span data-bind="html: getRemainingMessage()"></span>
-        <!-- /ko -->
-        <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
+            <!-- /ko -->
+            <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
             <span data-bind="html: getDefaultRemainingMessage()"></span>
-        <!-- /ko -->
+            <!-- /ko -->
+        </div>
     </div>
-</div>
-<?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.sidebar.script')
+    <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.message.script')
         ->setData('view_model', $viewModel)
         ->setData('scripId', '[data-role=shipping-remaining-cost-message]');
-?>
-<?php if ($scriptBlock): ?>
-    <?= $scriptBlock->toHtml() ?>
+    ?>
+    <?php if ($scriptBlock): ?>
+        <?= $scriptBlock->toHtml() ?>
+    <?php endif; ?>
 <?php endif; ?>

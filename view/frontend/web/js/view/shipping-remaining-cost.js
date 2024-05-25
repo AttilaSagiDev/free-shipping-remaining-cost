@@ -29,6 +29,11 @@ define([
          * @return {String}
          */
         getRemainingMessage: function () {
+            if (!this.showIfCartEmpty()
+                && this.shippingRemainingCost().message === this.getDefaultRemainingMessage()
+            ) {
+                return '';
+            }
             return this.shippingRemainingCost().message;
         },
 

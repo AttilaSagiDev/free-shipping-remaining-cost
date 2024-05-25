@@ -10,8 +10,11 @@ namespace Space\FreeShippingRemainingCost\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
+use Space\FreeShippingRemainingCost\Model\Config\Source\Layouts;
+use Space\FreeShippingRemainingCost\Model\Config\Source\Position;
 
 class ContentMessage implements ArgumentInterface
 {
@@ -19,6 +22,11 @@ class ContentMessage implements ArgumentInterface
      * @var CalculationHelper
      */
     private CalculationHelper $calculationHelper;
+
+    /**
+     * @var RequestInterface
+     */
+    private RequestInterface $request;
 
     /**
      * @var Json
@@ -34,17 +42,64 @@ class ContentMessage implements ArgumentInterface
      * Constructor
      *
      * @param CalculationHelper $calculationHelper
+     * @param RequestInterface $request
      * @param Json $json
      * @param ConfigInterface $config
      */
     public function __construct(
         CalculationHelper $calculationHelper,
+        RequestInterface $request,
         Json $json,
         ConfigInterface $config
     ) {
         $this->calculationHelper = $calculationHelper;
+        $this->request = $request;
         $this->json = $json;
         $this->config = $config;
+    }
+
+    /**
+     * Is show notification
+     *
+     * @return bool
+     */
+    public function isShow(): bool
+    {
+        if (!empty($this->config->getPagesToShow())
+            && (in_array($this->request->getFullActionName(), $this->config->getPagesToShow())
+                || $this->checkIfCartConfigurePage()
+            )
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Is sidebar position
+     *
+     * @return bool
+     */
+    public function isSidebarPosition(): bool
+    {
+        if ($this->request->getFullActionName() === Layouts::LAYOUT_CATEGORY_PAGE
+            && $this->config->getPositionToShow() === Position::SHOW_IN_SIDEBAR
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get sidebar block title
+     *
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->config->getBlockTitle();
     }
 
     /**
@@ -89,5 +144,21 @@ class ContentMessage implements ArgumentInterface
         }
 
         return '';
+    }
+
+    /**
+     * Check if cart configuration page
+     *
+     * @return bool
+     */
+    private function checkIfCartConfigurePage(): bool
+    {
+        if ($this->request->getFullActionName() === Layouts::LAYOUT_CART_CONFIGURE_PAGE
+            && in_array(Layouts::LAYOUT_PRODUCT_PAGE, $this->config->getPagesToShow())
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

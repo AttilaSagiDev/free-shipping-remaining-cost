@@ -66,6 +66,16 @@ interface ConfigInterface
         = 'free_shipping_remaining_cost_settings/display_config/success_message';
 
     /**
+     * Pages to show notification config path
+     */
+    public const XML_PATH_PAGES_TO_SHOW = 'free_shipping_remaining_cost_settings/pages_config/pages_to_show';
+
+    /**
+     * Position to show notification config path
+     */
+    public const XML_PATH_POSITION_TO_SHOW = 'free_shipping_remaining_cost_settings/pages_config/position_to_show';
+
+    /**
      * Check if module is enabled
      *
      * @return bool
@@ -134,4 +144,18 @@ interface ConfigInterface
      * @return string
      */
     public function getSuccessMessage(): string;
+
+    /**
+     * Get pages to show
+     *
+     * @return array
+     */
+    public function getPagesToShow(): array;
+
+    /**
+     * Get position to show on category pages
+     *
+     * @return int
+     */
+    public function getPositionToShow(): int;
 }
