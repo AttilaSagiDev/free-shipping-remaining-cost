@@ -28,6 +28,11 @@ class Layouts implements OptionSourceInterface
     public const LAYOUT_CART_PAGE = 'checkout_cart_index';
 
     /**
+     * Cart configure page layout
+     */
+    public const LAYOUT_CART_CONFIGURE_PAGE = 'checkout_cart_configure';
+
+    /**
      * Return array of options as value-label pairs
      *
      * @return array

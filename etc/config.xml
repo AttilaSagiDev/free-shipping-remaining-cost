@@ -23,7 +23,7 @@
                     <![CDATA[You need to add %s more to your cart, to gain free shipping.]]>
                 </notification_message>
                 <show_success_message>0</show_success_message>
-                <success_message><![CDATA[Free shipping is available.]]></success_message>
+                <success_message><![CDATA[Free shipping is available!]]></success_message>
             </display_config>
             <pages_config>
                 <pages_to_show>catalog_category_view</pages_to_show>

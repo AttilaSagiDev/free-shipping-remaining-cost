@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content.top">
+            <block name="shipping.remaining.cost.message"
+                   template="Space_FreeShippingRemainingCost::content/content-message.phtml"
+                   ifconfig="free_shipping_remaining_cost_settings/base_config/enabled">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+                    </argument>
+                </arguments>
+                <block name="shipping.remaining.cost.message.script"
+                       template="Space_FreeShippingRemainingCost::script/script-init.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

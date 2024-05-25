@@ -66,7 +66,9 @@ class ContentMessage implements ArgumentInterface
     public function isShow(): bool
     {
         if (!empty($this->config->getPagesToShow())
-            && in_array($this->request->getFullActionName(), $this->config->getPagesToShow())
+            && (in_array($this->request->getFullActionName(), $this->config->getPagesToShow())
+                || $this->checkIfCartConfigurePage()
+            )
         ) {
             return true;
         }
@@ -142,5 +144,21 @@ class ContentMessage implements ArgumentInterface
         }
 
         return '';
+    }
+
+    /**
+     * Check if cart configuration page
+     *
+     * @return bool
+     */
+    private function checkIfCartConfigurePage(): bool
+    {
+        if ($this->request->getFullActionName() === Layouts::LAYOUT_CART_CONFIGURE_PAGE
+            && in_array(Layouts::LAYOUT_PRODUCT_PAGE, $this->config->getPagesToShow())
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

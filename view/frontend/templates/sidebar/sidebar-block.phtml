@@ -12,12 +12,11 @@
 
 $viewModel = $block->getData('view_model');
 ?>
-<!-- TODO: remove block-compare and add own style -->
 <?php if ($viewModel->isShow() && $viewModel->isSidebarPosition()): ?>
-    <div class="block block-compare block-shipping-remaining-cost-sidebar"
+    <div class="block block-shipping-remaining-cost-sidebar"
          data-bind="scope: 'shippingRemainingCost'"
          data-role="shipping-remaining-cost-sidebar">
-        <div class="block-title">
+        <div data-bind="css: {'no-display': !getRemainingMessage() && showIfCartEmpty() === 0}" class="block-title">
             <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2"><!-- //NOSONAR -->
                 <?= $escaper->escapeHtml($viewModel->getTitle()) ?>
             </strong>
