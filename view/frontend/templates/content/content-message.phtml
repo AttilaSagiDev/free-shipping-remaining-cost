@@ -17,12 +17,7 @@ $viewModel = $block->getData('view_model');
          data-bind="scope: 'shippingRemainingCost'"
          data-role="shipping-remaining-cost-message">
         <div class="block-content">
-            <!-- ko if: getRemainingMessage() -->
-            <span data-bind="html: getRemainingMessage()"></span>
-            <!-- /ko -->
-            <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
-            <span data-bind="html: getDefaultRemainingMessage()"></span>
-            <!-- /ko -->
+            <span data-bind="html: getNotification()"></span>
         </div>
     </div>
     <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.message.script')

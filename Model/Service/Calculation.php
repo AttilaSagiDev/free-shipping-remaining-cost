@@ -120,13 +120,11 @@ class Calculation implements CalculationInterface
      */
     private function getMessage(float $remainingCost, float $subtotal): string
     {
-        if (!$subtotal && $this->config->isShowIfCartEmpty()) {
-            return $this->calculationHelper->getFormattedMessage($remainingCost);
-        } elseif (!$subtotal && !$this->config->isShowIfCartEmpty()) {
+        if (!$subtotal && !$this->config->isShowIfCartEmpty()) {
             return '';
         }
 
-        return $remainingCost > 0 && $remainingCost > $subtotal
+        return $remainingCost > 0
             ? $this->calculationHelper->getFormattedMessage($remainingCost)
             : $this->config->getSuccessMessage();
     }

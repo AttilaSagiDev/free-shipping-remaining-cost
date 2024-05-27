@@ -4,23 +4,30 @@
  */
 
 define([
+    'ko',
     'uiComponent',
     'Magento_Customer/js/customer-data'
-], function (Component, customerData) {
+], function (ko, Component, customerData) {
     'use strict';
 
     return Component.extend({
-
-        defaults: {
-            isCartEmpty: 0
-        },
-
         /**
          * @inheritdoc
          */
         initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
+            this.shippingRemainingCost.subscribe(this._getCurrentMessage, this);
+        },
+
+        /**
+         * Get current message
+         *
+         * @return {String}
+         * @private
+         */
+        _getCurrentMessage: function () {
+            return this.shippingRemainingCost().message;
         },
 
         /**
@@ -28,35 +35,15 @@ define([
          *
          * @return {String}
          */
-        getRemainingMessage: function () {
-            if (!this.showIfCartEmpty()
-                && this.shippingRemainingCost().message === this.getDefaultRemainingMessage()
+        getNotification: function () {
+            if (typeof this._getCurrentMessage() !== "undefined"
+                && this._getCurrentMessage() === ''
+                && parseInt(this.isShowIfCartEmpty)
             ) {
-                return '';
-            }
-            return this.shippingRemainingCost().message;
-        },
-
-        /**
-         * Get default remaining message
-         *
-         * @return {String}
-         */
-        getDefaultRemainingMessage: function () {
-            return this.defaultMessage;
-        },
-
-        /**
-         * Check to show message if cart is empty
-         *
-         * @return {Number}
-         */
-        showIfCartEmpty: function () {
-            if (parseInt(this.isShowIfCartEmpty)) {
-                this.isCartEmpty = 1;
+                return this.defaultMessage;
             }
 
-            return this.isCartEmpty;
+            return this._getCurrentMessage();
         }
     });
 });
