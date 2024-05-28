@@ -11,39 +11,50 @@ define([
     'use strict';
 
     return Component.extend({
+
+        defaults: {
+            isInit: false,
+            isReady: ko.observable(false),
+            notificationMessage: ko.observable(''),
+        },
+
         /**
          * @inheritdoc
          */
         initialize: function () {
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
-            this.shippingRemainingCost.subscribe(this._getCurrentMessage, this);
-        },
-
-        /**
-         * Get current message
-         *
-         * @return {String}
-         * @private
-         */
-        _getCurrentMessage: function () {
-            return this.shippingRemainingCost().message;
+            this.shippingRemainingCost.subscribe(this._getNotification, this);
+            if (!this.isInit) {
+                this._getNotification();
+            }
         },
 
         /**
          * Get remaining message
          *
-         * @return {String}
+         * @private
+         * return {void}
          */
-        getNotification: function () {
-            if (typeof this._getCurrentMessage() !== "undefined"
-                && this._getCurrentMessage() === ''
+        _getNotification: function () {
+            if (typeof this.shippingRemainingCost().message !== "undefined"
+                && this.shippingRemainingCost().message === ''
                 && parseInt(this.isShowIfCartEmpty)
             ) {
-                return this.defaultMessage;
+                this.notificationMessage(this.defaultMessage);
+            } else if (typeof this.shippingRemainingCost().message === "undefined"
+                && parseInt(this.isShowIfCartEmpty)
+            ) {
+                this.notificationMessage(this.defaultMessage);
+            } else {
+                this.notificationMessage(this.shippingRemainingCost().message);
             }
 
-            return this._getCurrentMessage();
+            if (this.notificationMessage() !== ''
+                && typeof this.notificationMessage() !== "undefined"
+            ) {
+                this.isReady(true);
+            }
         }
     });
 });

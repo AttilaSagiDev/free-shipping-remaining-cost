@@ -16,9 +16,11 @@ $viewModel = $block->getData('view_model');
     <div class="block block-shipping-remaining-cost-message"
          data-bind="scope: 'shippingRemainingCost'"
          data-role="shipping-remaining-cost-message">
-        <div class="block-content">
-            <span data-bind="html: getNotification()"></span>
-        </div>
+        <!-- ko if: isReady() -->
+            <div data-bind="css: {'block-content': isReady()}">
+                <span data-bind="html: notificationMessage()"></span>
+            </div>
+        <!-- /ko -->
     </div>
     <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.message.script')
         ->setData('view_model', $viewModel)
