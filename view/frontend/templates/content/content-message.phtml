@@ -16,14 +16,11 @@ $viewModel = $block->getData('view_model');
     <div class="block block-shipping-remaining-cost-message"
          data-bind="scope: 'shippingRemainingCost'"
          data-role="shipping-remaining-cost-message">
-        <div class="block-content">
-            <!-- ko if: getRemainingMessage() -->
-            <span data-bind="html: getRemainingMessage()"></span>
-            <!-- /ko -->
-            <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
-            <span data-bind="html: getDefaultRemainingMessage()"></span>
-            <!-- /ko -->
-        </div>
+        <!-- ko if: isReady() -->
+            <div data-bind="css: {'block-content': isReady()}">
+                <span data-bind="html: notificationMessage()"></span>
+            </div>
+        <!-- /ko -->
     </div>
     <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.message.script')
         ->setData('view_model', $viewModel)

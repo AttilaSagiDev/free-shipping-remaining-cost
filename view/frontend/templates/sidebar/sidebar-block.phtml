@@ -16,19 +16,16 @@ $viewModel = $block->getData('view_model');
     <div class="block block-shipping-remaining-cost-sidebar"
          data-bind="scope: 'shippingRemainingCost'"
          data-role="shipping-remaining-cost-sidebar">
-        <div data-bind="css: {'no-display': !getRemainingMessage() && showIfCartEmpty() === 0}" class="block-title">
+        <div data-bind="css: {'no-display': !isReady()}" class="block-title">
             <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2"><!-- //NOSONAR -->
                 <?= $escaper->escapeHtml($viewModel->getTitle()) ?>
             </strong>
         </div>
-        <div class="block-content">
-            <!-- ko if: getRemainingMessage() -->
-            <span data-bind="html: getRemainingMessage()"></span>
-            <!-- /ko -->
-            <!-- ko if: showIfCartEmpty() && !getRemainingMessage() -->
-            <span data-bind="html: getDefaultRemainingMessage()"></span>
-            <!-- /ko -->
-        </div>
+        <!-- ko if: isReady() -->
+            <div class="block-content" >
+                <span data-bind="html: notificationMessage()"></span>
+            </div>
+        <!-- /ko -->
     </div>
     <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.sidebar.script')
         ->setData('view_model', $viewModel)
