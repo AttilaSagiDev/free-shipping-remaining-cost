@@ -1,0 +1,47 @@
+<?php
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $viewModel \Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+$viewModel = $block->getData('view_model');
+$baseMessage = $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']);
+$showBlockTitle = $block->getData('show_block_title');
+?>
+<div class="block block-shipping-remaining-cost-widget"
+     data-bind="scope: 'shippingRemainingCost'"
+     data-role="shipping-remaining-cost-message-widget">
+    <?php if ($showBlockTitle): ?>
+        <div data-bind="css: {'no-display': !isReady()}" class="block-title">
+            <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2"><!-- //NOSONAR -->
+                <?= $escaper->escapeHtml($block->getData('block_title')) ?>
+            </strong>
+        </div>
+    <?php endif; ?>
+    <!-- ko if: isReady() -->
+    <div data-bind="css: {'block-content': isReady()}">
+        <span data-bind="html: notificationMessage()"></span>
+    </div>
+    <!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-role=shipping-remaining-cost-message-widget]": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "shippingRemainingCost": {
+                        "component": "Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost",
+                        "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty()) ?>",
+                        "defaultMessage": <?= /* @noEscape */ $viewModel->getDefaultMessage($baseMessage) ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

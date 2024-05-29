@@ -14,6 +14,7 @@
             <module name="Magento_Ui"/>
             <module name="Magento_User"/>
             <module name="Magento_Shipping"/>
+            <module name="Magento_Widget" />
         </sequence>
     </module>
 </config>
