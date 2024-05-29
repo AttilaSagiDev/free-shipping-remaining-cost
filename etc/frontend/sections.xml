@@ -28,6 +28,9 @@
     <action name="checkout/cart/estimateUpdatePost">
         <section name="shipping-remaining-cost"/>
     </action>
+    <action name="checkout/onepage/saveOrder">
+        <section name="shipping-remaining-cost"/>
+    </action>
     <action name="checkout/sidebar/removeItem">
         <section name="shipping-remaining-cost"/>
     </action>

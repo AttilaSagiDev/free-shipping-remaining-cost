@@ -6,16 +6,16 @@
 define([
     'ko',
     'uiComponent',
-    'Magento_Customer/js/customer-data'
+    'Magento_Customer/js/customer-data',
+    'domReady!'
 ], function (ko, Component, customerData) {
     'use strict';
 
     return Component.extend({
 
         defaults: {
-            isInit: false,
             isReady: ko.observable(false),
-            notificationMessage: ko.observable(''),
+            notificationMessage: ko.observable('')
         },
 
         /**
@@ -25,9 +25,7 @@ define([
             this._super();
             this.shippingRemainingCost = customerData.get('shipping-remaining-cost');
             this.shippingRemainingCost.subscribe(this._getNotification, this);
-            if (!this.isInit) {
-                this._getNotification();
-            }
+            this._getNotification();
         },
 
         /**
@@ -37,16 +35,11 @@ define([
          * return {void}
          */
         _getNotification: function () {
-            if (typeof this.shippingRemainingCost().message !== "undefined"
-                && this.shippingRemainingCost().message === ''
+            if (typeof this.shippingRemainingCost().message === "undefined"
                 && parseInt(this.isShowIfCartEmpty)
             ) {
                 this.notificationMessage(this.defaultMessage);
-            } else if (typeof this.shippingRemainingCost().message === "undefined"
-                && parseInt(this.isShowIfCartEmpty)
-            ) {
-                this.notificationMessage(this.defaultMessage);
-            } else {
+            } else if (typeof this.shippingRemainingCost().message !== "undefined") {
                 this.notificationMessage(this.shippingRemainingCost().message);
             }
 
