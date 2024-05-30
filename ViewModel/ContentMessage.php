@@ -59,6 +59,16 @@ class ContentMessage implements ArgumentInterface
     }
 
     /**
+     * Check if module is enabled
+     *
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->config->isEnabled();
+    }
+
+    /**
      * Is show notification
      *
      * @return bool
