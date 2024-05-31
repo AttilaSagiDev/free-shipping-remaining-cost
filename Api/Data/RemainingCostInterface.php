@@ -19,16 +19,16 @@ interface RemainingCostInterface
     /**
      * Get remaining cost message
      *
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string;
+    public function getMessage(): ?string;
 
     /**
      * Get remaining cost value
      *
-     * @return float
+     * @return float|null
      */
-    public function getValue(): float;
+    public function getValue(): ?float;
 
     /**
      * Set message

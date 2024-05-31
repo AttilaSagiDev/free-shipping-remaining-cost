@@ -11,6 +11,7 @@ namespace Space\FreeShippingRemainingCost\Model\Service;
 use Space\FreeShippingRemainingCost\Api\RemainingCostCalculationInterface;
 use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterfaceFactory;
+use Magento\Quote\Api\GuestCartRepositoryInterface;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
 use Psr\Log\LoggerInterface;
@@ -32,6 +33,11 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
     private RemainingCostInterfaceFactory $remainingCostCalculationFactory;
 
     /**
+     * @var GuestCartRepositoryInterface
+     */
+    private GuestCartRepositoryInterface $guestCartRepository;
+
+    /**
      * @var ConfigInterface
      */
     private ConfigInterface $config;
@@ -51,6 +57,7 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
      *
      * @param Session $checkoutSession
      * @param RemainingCostInterfaceFactory $remainingCostCalculationFactory
+     * @param GuestCartRepositoryInterface $guestCartRepository
      * @param ConfigInterface $config
      * @param CalculationHelper $calculationHelper
      * @param LoggerInterface $logger
@@ -58,12 +65,14 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
     public function __construct(
         Session $checkoutSession,
         RemainingCostInterfaceFactory $remainingCostCalculationFactory,
+        GuestCartRepositoryInterface $guestCartRepository,
         ConfigInterface $config,
         CalculationHelper $calculationHelper,
         LoggerInterface $logger
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->remainingCostCalculationFactory = $remainingCostCalculationFactory;
+        $this->guestCartRepository = $guestCartRepository;
         $this->config = $config;
         $this->calculationHelper = $calculationHelper;
         $this->logger = $logger;
@@ -91,9 +100,29 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
     }
 
     /**
+     * Get remaining cost by cart ID for web api
+     *
+     * @param string $cartId
+     * @return RemainingCostInterface
+     * @throws NoSuchEntityException
+     */
+    public function getRemainingCostByCartId(string $cartId): RemainingCostInterface
+    {
+        $remainingCost = $this->remainingCostCalculationFactory->create();
+
+        $quote = $this->guestCartRepository->get($cartId);
+        $subtotal = $quote->getShippingAddress()->getSubtotalWithDiscount();
+        $remainingCostValue = $this->getRemainingCostValue($quote, $subtotal);
+        $remainingCost->setMessage($this->getMessage($remainingCostValue, $subtotal));
+        $remainingCost->setValue($remainingCostValue);
+
+        return $remainingCost;
+    }
+
+    /**
      * Get remaining cost value
      *
-     * @param Quote $quote
+     * @param Quote|\Magento\Quote\Api\Data\CartInterface $quote
      * @param float $subtotal
      * @return float
      */

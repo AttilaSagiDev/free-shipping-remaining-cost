@@ -16,9 +16,9 @@ class RemainingCost extends AbstractModel implements RemainingCostInterface
     /**
      * Get remaining cost message
      *
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->getData(self::MESSAGE);
     }
@@ -26,9 +26,9 @@ class RemainingCost extends AbstractModel implements RemainingCostInterface
     /**
      * Get remaining cost value
      *
-     * @return float
+     * @return float|null
      */
-    public function getValue(): float
+    public function getValue(): ?float
     {
         return $this->getData(self::VALUE);
     }

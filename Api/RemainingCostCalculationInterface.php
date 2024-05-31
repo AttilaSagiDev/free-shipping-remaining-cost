@@ -15,7 +15,15 @@ interface RemainingCostCalculationInterface
     /**
      * Get remaining cost
      *
-     * @return RemainingCostInterface
+     * @return \Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface
      */
     public function getRemainingCost(): RemainingCostInterface;
+
+    /**
+     * Get remaining cost by cart ID for web api
+     *
+     * @param string $cartId
+     * @return \Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface
+     */
+    public function getRemainingCostByCartId(string $cartId): RemainingCostInterface;
 }
