@@ -10,6 +10,11 @@ namespace Space\FreeShippingRemainingCost\Api;
 
 use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface;
 
+/**
+ * Remaining cost calculation interface for carts
+ * @api
+ * @since 1.0.0
+ */
 interface RemainingCostCalculationInterface
 {
     /**
