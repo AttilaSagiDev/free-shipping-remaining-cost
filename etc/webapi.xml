@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/guestFreeShippingRemainingCost/:cartId" method="GET">
+        <service class="Space\FreeShippingRemainingCost\Api\GuestCalculationInterface"
+                 method="get"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/customerFreeShippingRemainingCost/mine" method="GET">
+        <service class="Space\FreeShippingRemainingCost\Api\CustomerCalculationInterface"
+                 method="get"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+</routes>

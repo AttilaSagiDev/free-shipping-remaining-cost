@@ -9,6 +9,12 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Space\FreeShippingRemainingCost\Api\Data\ConfigInterface"
                 type="Space\FreeShippingRemainingCost\Model\Config" />
-    <preference for="Space\FreeShippingRemainingCost\Api\CalculationInterface"
-                type="Space\FreeShippingRemainingCost\Model\Service\Calculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface"
+                type="Space\FreeShippingRemainingCost\Model\RemainingCost" />
+    <preference for="Space\FreeShippingRemainingCost\Api\RemainingCostCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\RemainingCostCalculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\GuestCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Api\GuestCalculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\CustomerCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Api\CustomerCalculation" />
 </config>

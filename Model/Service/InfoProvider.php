@@ -8,22 +8,13 @@ declare(strict_types=1);
 
 namespace Space\FreeShippingRemainingCost\Model\Service;
 
-use Space\FreeShippingRemainingCost\Api\CalculationInterface;
-use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
 use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
-use Psr\Log\LoggerInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote;
+use Magento\Quote\Api\Data\CartInterface;
 
-class Calculation implements CalculationInterface
+class InfoProvider
 {
-    /**
-     * @var Session
-     */
-    private Session $checkoutSession;
-
     /**
      * @var ConfigInterface
      */
@@ -35,59 +26,27 @@ class Calculation implements CalculationInterface
     private CalculationHelper $calculationHelper;
 
     /**
-     * @var LoggerInterface
-     */
-    private LoggerInterface $logger;
-
-    /**
      * Constructor
      *
-     * @param Session $checkoutSession
      * @param ConfigInterface $config
      * @param CalculationHelper $calculationHelper
-     * @param LoggerInterface $logger
      */
     public function __construct(
-        Session $checkoutSession,
         ConfigInterface $config,
-        CalculationHelper $calculationHelper,
-        LoggerInterface $logger
+        CalculationHelper $calculationHelper
     ) {
-        $this->checkoutSession = $checkoutSession;
         $this->config = $config;
         $this->calculationHelper = $calculationHelper;
-        $this->logger = $logger;
-    }
-
-    /**
-     * Get remaining cost message
-     *
-     * @return array
-     */
-    public function getRemainingCostMessage(): array
-    {
-        $remainingCost = [];
-        try {
-            $quote = $this->checkoutSession->getQuote();
-            $subtotal = $quote->getShippingAddress()->getSubtotalWithDiscount();
-            $remainingCostValue = $this->getRemainingCostValue($quote, $subtotal);
-            $remainingCost['message'] = $this->getMessage($remainingCostValue, $subtotal);
-            $remainingCost['value'] = $remainingCostValue;
-        } catch (LocalizedException|NoSuchEntityException $exception) {
-            $this->logger->error($exception->getMessage());
-        }
-
-        return $remainingCost;
     }
 
     /**
      * Get remaining cost value
      *
-     * @param Quote $quote
+     * @param Quote|CartInterface $quote
      * @param float $subtotal
      * @return float
      */
-    private function getRemainingCostValue(Quote $quote, float $subtotal): float
+    public function getRemainingCostValue(Quote|CartInterface $quote, float $subtotal): float
     {
         $remainingCostValue = $this->config->getCustomAmount();
 
@@ -118,7 +77,7 @@ class Calculation implements CalculationInterface
      * @param float $subtotal
      * @return string
      */
-    private function getMessage(float $remainingCost, float $subtotal): string
+    public function getMessage(float $remainingCost, float $subtotal): string
     {
         if (!$subtotal && !$this->config->isShowIfCartEmpty()) {
             return '';
