@@ -15,4 +15,6 @@
                 type="Space\FreeShippingRemainingCost\Model\Service\RemainingCostCalculation" />
     <preference for="Space\FreeShippingRemainingCost\Api\GuestCalculationInterface"
                 type="Space\FreeShippingRemainingCost\Model\Service\Api\GuestCalculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\CustomerCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Api\CustomerCalculation" />
 </config>

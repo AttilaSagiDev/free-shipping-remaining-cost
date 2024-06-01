@@ -18,7 +18,7 @@ use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface;
 interface GuestCalculationInterface
 {
     /**
-     * Get remaining cost by cart ID for web api
+     * Get guest remaining cost by cart ID for web api
      *
      * @param string $cartId
      * @return \Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface

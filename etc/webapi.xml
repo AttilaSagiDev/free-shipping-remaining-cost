@@ -14,4 +14,14 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/customerFreeShippingRemainingCost/mine" method="GET">
+        <service class="Space\FreeShippingRemainingCost\Api\CustomerCalculationInterface"
+                 method="get"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
 </routes>
