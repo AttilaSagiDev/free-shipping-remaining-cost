@@ -11,16 +11,17 @@ namespace Space\FreeShippingRemainingCost\Api;
 use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface;
 
 /**
- * Remaining cost calculation interface for carts
+ * Remaining cost calculation interface for guest carts
  * @api
  * @since 1.0.0
  */
-interface RemainingCostCalculationInterface
+interface GuestCalculationInterface
 {
     /**
-     * Get remaining cost
+     * Get remaining cost by cart ID for web api
      *
+     * @param string $cartId
      * @return \Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface
      */
-    public function getRemainingCost(): RemainingCostInterface;
+    public function get(string $cartId): RemainingCostInterface;
 }

@@ -11,14 +11,10 @@ namespace Space\FreeShippingRemainingCost\Model\Service;
 use Space\FreeShippingRemainingCost\Api\RemainingCostCalculationInterface;
 use Magento\Checkout\Model\Session;
 use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterfaceFactory;
-use Magento\Quote\Api\GuestCartRepositoryInterface;
-use Space\FreeShippingRemainingCost\Api\Data\ConfigInterface;
-use Space\FreeShippingRemainingCost\Helper\CalculationHelper;
 use Psr\Log\LoggerInterface;
 use Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Quote\Model\Quote;
 
 class RemainingCostCalculation implements RemainingCostCalculationInterface
 {
@@ -33,19 +29,9 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
     private RemainingCostInterfaceFactory $remainingCostCalculationFactory;
 
     /**
-     * @var GuestCartRepositoryInterface
+     * @var InfoProvider
      */
-    private GuestCartRepositoryInterface $guestCartRepository;
-
-    /**
-     * @var ConfigInterface
-     */
-    private ConfigInterface $config;
-
-    /**
-     * @var CalculationHelper
-     */
-    private CalculationHelper $calculationHelper;
+    private InfoProvider $infoProvider;
 
     /**
      * @var LoggerInterface
@@ -57,24 +43,18 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
      *
      * @param Session $checkoutSession
      * @param RemainingCostInterfaceFactory $remainingCostCalculationFactory
-     * @param GuestCartRepositoryInterface $guestCartRepository
-     * @param ConfigInterface $config
-     * @param CalculationHelper $calculationHelper
+     * @param InfoProvider $infoProvider
      * @param LoggerInterface $logger
      */
     public function __construct(
         Session $checkoutSession,
         RemainingCostInterfaceFactory $remainingCostCalculationFactory,
-        GuestCartRepositoryInterface $guestCartRepository,
-        ConfigInterface $config,
-        CalculationHelper $calculationHelper,
+        InfoProvider $infoProvider,
         LoggerInterface $logger
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->remainingCostCalculationFactory = $remainingCostCalculationFactory;
-        $this->guestCartRepository = $guestCartRepository;
-        $this->config = $config;
-        $this->calculationHelper = $calculationHelper;
+        $this->infoProvider = $infoProvider;
         $this->logger = $logger;
     }
 
@@ -89,82 +69,13 @@ class RemainingCostCalculation implements RemainingCostCalculationInterface
         try {
             $quote = $this->checkoutSession->getQuote();
             $subtotal = $quote->getShippingAddress()->getSubtotalWithDiscount();
-            $remainingCostValue = $this->getRemainingCostValue($quote, $subtotal);
-            $remainingCost->setMessage($this->getMessage($remainingCostValue, $subtotal));
+            $remainingCostValue = $this->infoProvider->getRemainingCostValue($quote, $subtotal);
+            $remainingCost->setMessage($this->infoProvider->getMessage($remainingCostValue, $subtotal));
             $remainingCost->setValue($remainingCostValue);
         } catch (LocalizedException|NoSuchEntityException $exception) {
             $this->logger->error($exception->getMessage());
         }
 
         return $remainingCost;
-    }
-
-    /**
-     * Get remaining cost by cart ID for web api
-     *
-     * @param string $cartId
-     * @return RemainingCostInterface
-     * @throws NoSuchEntityException
-     */
-    public function getRemainingCostByCartId(string $cartId): RemainingCostInterface
-    {
-        $remainingCost = $this->remainingCostCalculationFactory->create();
-
-        $quote = $this->guestCartRepository->get($cartId);
-        $subtotal = $quote->getShippingAddress()->getSubtotalWithDiscount();
-        $remainingCostValue = $this->getRemainingCostValue($quote, $subtotal);
-        $remainingCost->setMessage($this->getMessage($remainingCostValue, $subtotal));
-        $remainingCost->setValue($remainingCostValue);
-
-        return $remainingCost;
-    }
-
-    /**
-     * Get remaining cost value
-     *
-     * @param Quote|\Magento\Quote\Api\Data\CartInterface $quote
-     * @param float $subtotal
-     * @return float
-     */
-    private function getRemainingCostValue(Quote $quote, float $subtotal): float
-    {
-        $remainingCostValue = $this->config->getCustomAmount();
-
-        if ($this->config->isUseFreeShippingAmount()
-            && $this->config->isFreeShippingMethodEnabled()
-            && $this->config->getFreeShippingMethodAmount() > 0
-        ) {
-            $remainingCostValue = $this->config->getFreeShippingMethodAmount();
-        }
-
-        if ($subtotal > 0
-            && !$quote->getShippingAddress()->getFreeShipping()
-        ) {
-            $remainingCostValue = $this->config->isUseFreeShippingAmount()
-                ? $this->config->getFreeShippingMethodAmount() - $subtotal
-                : $remainingCostValue - $subtotal;
-        } elseif ($subtotal > 0 && $quote->getShippingAddress()->getFreeShipping()) {
-            $remainingCostValue = 0;
-        }
-
-        return max($remainingCostValue, 0);
-    }
-
-    /**
-     * Get message
-     *
-     * @param float $remainingCost
-     * @param float $subtotal
-     * @return string
-     */
-    private function getMessage(float $remainingCost, float $subtotal): string
-    {
-        if (!$subtotal && !$this->config->isShowIfCartEmpty()) {
-            return '';
-        }
-
-        return $remainingCost > 0
-            ? $this->calculationHelper->getFormattedMessage($remainingCost)
-            : $this->config->getSuccessMessage();
     }
 }
