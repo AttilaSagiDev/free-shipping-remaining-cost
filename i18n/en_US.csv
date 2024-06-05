@@ -26,6 +26,7 @@ Display,Display
 "Success Message","Success Message"
 "The success message if free shipping is available.","The success message if free shipping is available."
 Pages,Pages
+"<strong>Note: You can customize the extension's position by using Widget.</strong>","<strong>Note: You can customize the extension's position by using Widget.</strong>"
 "Pages to Show notification","Pages to Show notification"
 "Please select pages.","Please select pages."
 "Category Page Position","Category Page Position"
