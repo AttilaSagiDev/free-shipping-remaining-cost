@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Space\FreeShippingRemainingCost\Api\Data\ConfigInterface"
+                type="Space\FreeShippingRemainingCost\Model\Config" />
+    <preference for="Space\FreeShippingRemainingCost\Api\Data\RemainingCostInterface"
+                type="Space\FreeShippingRemainingCost\Model\RemainingCost" />
+    <preference for="Space\FreeShippingRemainingCost\Api\RemainingCostCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\RemainingCostCalculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\GuestCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Api\GuestCalculation" />
+    <preference for="Space\FreeShippingRemainingCost\Api\CustomerCalculationInterface"
+                type="Space\FreeShippingRemainingCost\Model\Service\Api\CustomerCalculation" />
+</config>

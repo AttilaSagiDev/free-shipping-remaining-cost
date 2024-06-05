@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $viewModel \Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+$viewModel = $block->getData('view_model');
+$baseMessage = $escaper->escapeHtml($viewModel->getBaseMessage(), ['span']);
+?>
+<script type="text/x-magento-init">
+    {
+        "<?= $escaper->escapeHtml($block->getData('scripId')) ?>": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "shippingRemainingCost": {
+                        "component": "Space_FreeShippingRemainingCost/js/view/shipping-remaining-cost",
+                        "isShowIfCartEmpty": "<?= $escaper->escapeHtml($viewModel->isShowIfCartEmpty()) ?>",
+                        "defaultMessage": <?= /* @noEscape */ $viewModel->getDefaultMessage($baseMessage) ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

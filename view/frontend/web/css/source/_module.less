@@ -1,0 +1,36 @@
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+.block-shipping-remaining-cost-message,
+.block-shipping-remaining-cost-sidebar,
+.block-shipping-remaining-cost-widget {
+    .block-content {
+        .price {
+            font-weight: 700;
+        }
+    }
+}
+
+.block-shipping-remaining-cost-sidebar,
+.block-shipping-remaining-cost-widget {
+    .block-title {
+        &:extend(.abs-block-title all);
+        margin: 0 0 2rem;
+    }
+
+    .block-title strong {
+        font-size: 18px;
+        font-weight: 300;
+        vertical-align: middle;
+    }
+}
+
+.block-shipping-remaining-cost-message,
+.block-shipping-remaining-cost-widget {
+    .block-content {
+        background: @secondary__color__light;
+        padding: 1rem;
+    }
+}

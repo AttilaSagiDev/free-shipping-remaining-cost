@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="space_tab" translate="label" sortOrder="500">
+            <label>Space Extensions</label>
+        </tab>
+        <section id="free_shipping_remaining_cost_settings" translate="label" type="text"
+                 sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Free Shipping Remaining Cost</label>
+            <tab>space_tab</tab>
+            <resource>Space_FreeShippingRemainingCost::config</resource>
+            <group id="base_config" translate="label" type="text" sortOrder="10" showInDefault="1"
+                   showInWebsite="1" showInStore="0">
+                <label>Configuration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable extension.</comment>
+                </field>
+            </group>
+            <group id="common_config" translate="label" type="text" sortOrder="20" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Common Settings</label>
+                <field id="use_free_shipping_method" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Use built-in free shipping method amount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to use Magento free shipping method amount. Note: the free shipping method has to be enabled and set.
+                    </comment>
+                </field>
+                <field id="custom_amount" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Custom Amount</label>
+                    <validate>validate-greater-than-zero validate-number required-entry</validate>
+                    <comment>Custom amount for free shipping calculation.</comment>
+                    <depends>
+                        <field id="use_free_shipping_method">0</field>
+                    </depends>
+                </field>
+                <field id="show_if_cart_is_empty" translate="label comment" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Show if Cart is Empty</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to show free shipping information text if the cart is empty.</comment>
+                </field>
+            </group>
+            <group id="display_config" translate="label" type="text" sortOrder="30" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Display</label>
+                <field id="block_title" translate="label comment" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Block Title</label>
+                    <validate>required-entry</validate>
+                    <comment>The title of the sidebar's free shipping notification block.</comment>
+                </field>
+                <field id="notification_message" translate="label comment" type="text" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notification Text</label>
+                    <validate>required-entry</validate>
+                    <comment>
+                        <![CDATA[The notification text which will be displayed. Please note that the "%s" will be replaced with the price, so you have to add it in the proper place within the text. You can use HTML tags also.]]>
+                    </comment>
+                </field>
+                <field id="show_success_message" translate="label comment" type="select" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show Success Message</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable to show the success message.</comment>
+                </field>
+                <field id="success_message" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Success Message</label>
+                    <validate>required-entry</validate>
+                    <comment>The success message if free shipping is available.</comment>
+                    <depends>
+                        <field id="show_success_message">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="pages_config" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Pages</label>
+                <fieldset_css>complex</fieldset_css>
+                <comment>
+                    <![CDATA[<strong>Note: You can customize the extension's position by using Widget.</strong>]]>
+                </comment>
+                <field id="pages_to_show" translate="label comment" type="multiselect" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Pages to Show notification</label>
+                    <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Layouts</source_model>
+                    <comment>Please select pages.</comment>
+                </field>
+                <field id="position_to_show" translate="label" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Category Page Position</label>
+                    <source_model>Space\FreeShippingRemainingCost\Model\Config\Source\Position</source_model>
+                    <comment>Please select where to show notification on category pages.</comment>
+                    <depends>
+                        <field id="pages_to_show">catalog_category_view</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

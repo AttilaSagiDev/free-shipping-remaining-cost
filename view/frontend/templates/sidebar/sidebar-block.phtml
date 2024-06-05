@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright (c) 2024 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $viewModel \Space\FreeShippingRemainingCost\ViewModel\ContentMessage
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+$viewModel = $block->getData('view_model');
+?>
+<?php if ($viewModel->isShow() && $viewModel->isSidebarPosition()): ?>
+    <div class="block block-shipping-remaining-cost-sidebar"
+         data-bind="scope: 'shippingRemainingCost'"
+         data-role="shipping-remaining-cost-sidebar">
+        <div data-bind="css: {'no-display': !isReady()}" class="block-title">
+            <strong id="block-shipping-remaining-cost-heading" role="heading" aria-level="2"><!-- //NOSONAR -->
+                <?= $escaper->escapeHtml($viewModel->getTitle()) ?>
+            </strong>
+        </div>
+        <!-- ko if: isReady() -->
+            <div class="block-content" >
+                <span data-bind="html: notificationMessage()"></span>
+            </div>
+        <!-- /ko -->
+    </div>
+    <?php $scriptBlock = $block->getChildBlock('shipping.remaining.cost.sidebar.script')
+        ->setData('view_model', $viewModel)
+        ->setData('scripId', '[data-role=shipping-remaining-cost-sidebar]');
+    ?>
+    <?php if ($scriptBlock): ?>
+        <?= $scriptBlock->toHtml() ?>
+    <?php endif; ?>
+<?php endif; ?>
