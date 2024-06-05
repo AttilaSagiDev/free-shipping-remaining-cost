@@ -38,7 +38,7 @@
                 </field>
                 <field id="custom_amount" translate="label comment" type="text" sortOrder="20"
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Custom amount amount</label>
+                    <label>Custom Amount</label>
                     <validate>validate-greater-than-zero validate-number required-entry</validate>
                     <comment>Custom amount for free shipping calculation.</comment>
                     <depends>
@@ -85,9 +85,13 @@
                     </depends>
                 </field>
             </group>
-            <group id="pages_config" translate="label" type="text" sortOrder="40" showInDefault="1"
+            <group id="pages_config" translate="label comment" type="text" sortOrder="40" showInDefault="1"
                    showInWebsite="1" showInStore="1">
                 <label>Pages</label>
+                <fieldset_css>complex</fieldset_css>
+                <comment>
+                    <![CDATA[<strong>Note: You can customize the extension's position by using Widget.</strong>]]>
+                </comment>
                 <field id="pages_to_show" translate="label comment" type="multiselect" sortOrder="10"
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Pages to Show notification</label>
