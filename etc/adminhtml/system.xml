@@ -38,7 +38,7 @@
                 </field>
                 <field id="custom_amount" translate="label comment" type="text" sortOrder="20"
                        showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
-                    <label>Custom amount amount</label>
+                    <label>Custom Amount</label>
                     <validate>validate-greater-than-zero validate-number required-entry</validate>
                     <comment>Custom amount for free shipping calculation.</comment>
                     <depends>
