@@ -1,5 +1,6 @@
 # **Magento 2 Free Shipping Remaining Cost Extension** #
 
+[![M2 Coding Standard](https://github.com/AttilaSagiDev/free-shipping-remaining-cost/actions/workflows/codesniffer-actions.yml/badge.svg?branch=develop)](https://github.com/AttilaSagiDev/free-shipping-remaining-cost/actions/workflows/codesniffer-actions.yml)
 
 ## Description ##
 
@@ -31,7 +32,7 @@ Support:
 
 ** Important! Always install and test the extension in your development environment, and not on your live or production server. **
 
-1. Backup Your Data Backup your store database and whole Magento 2 directory.
+1. Backup your store database and the whole Magento 2 directory
 
 2. Enable extension Please use the following commands in your Magento 2 console:
 
@@ -57,8 +58,6 @@ Use built-in free shipping method amount: Enable to use Magento free shipping me
 
 Custom amount: Custom amount for free shipping calculation.
 
-Email CC Emails To: Please enter the cc copy email address where notification will be also sent.
-
 Show if Cart is Empty: Enable to show free shipping information text if the cart is empty.
 
 ### Display ###
@@ -78,6 +77,9 @@ Pages to Show notification: Category page, Product page, Cart page
 Category Page Position: Show in content top as message or Show in sidebar as block
 
 ## Change Log ##
+
+Version 1.1.1 - Sep 25, 2024
+- Read me fix
 
 Version 1.1.0 - Jun 5, 2024
 - Compatibility with Magento Community Edition 2.4.x
@@ -108,7 +110,7 @@ Version 1.0.0 - Sep 10, 2016
 
 ## Support ##
 
-If you have any questions about the extension, please contact with me.
+If you have any questions about the extension, please get in touch with me.
 
 ## License ##
 
