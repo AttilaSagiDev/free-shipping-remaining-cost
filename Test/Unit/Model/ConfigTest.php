@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2024 Attila Sagi
+ * Copyright (c) 2026 Attila Sagi
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
@@ -29,15 +29,13 @@ class ConfigTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->scopeConfigMock = $this->getMockBuilder(ScopeConfigInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->scopeConfigMock = $this->createMock(ScopeConfigInterface::class);
 
         $this->model = new Config($this->scopeConfigMock);
     }
 
     /**
-     * * @dataProvider booleanFlagProvider
+     * @dataProvider booleanFlagProvider
      */
     public function testBooleanFlags(string $method, string $xmlPath, bool $expected): void
     {
@@ -86,20 +84,20 @@ class ConfigTest extends TestCase
         $this->assertEquals($expected, $this->model->getPagesToShow());
     }
 
-    public function booleanFlagProvider(): array
+    public static function booleanFlagProvider(): array
     {
         return [
-            [
+            'Is Enabled' => [
                 'isEnabled',
                 ConfigInterface::XML_PATH_ENABLED,
                 true
             ],
-            [
+            'Show if Cart Empty' => [
                 'isShowIfCartEmpty',
                 ConfigInterface::XML_PATH_SHOW_IF_CART_EMPTY,
                 false
             ],
-            [
+            'Show Success Message' => [
                 'isShowSuccessMessage',
                 ConfigInterface::XML_PATH_DISPLAY_SHOW_SUCCESS_MESSAGE,
                 true
