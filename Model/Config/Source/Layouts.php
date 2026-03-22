@@ -15,22 +15,22 @@ class Layouts implements OptionSourceInterface
     /**
      * Category page layout
      */
-    public const LAYOUT_CATEGORY_PAGE = 'catalog_category_view';
+    public const string LAYOUT_CATEGORY_PAGE = 'catalog_category_view';
 
     /**
      * Product page layout
      */
-    public const LAYOUT_PRODUCT_PAGE = 'catalog_product_view';
+    public const string LAYOUT_PRODUCT_PAGE = 'catalog_product_view';
 
     /**
      * Cart page layout
      */
-    public const LAYOUT_CART_PAGE = 'checkout_cart_index';
+    public const string LAYOUT_CART_PAGE = 'checkout_cart_index';
 
     /**
      * Cart configure page layout
      */
-    public const LAYOUT_CART_CONFIGURE_PAGE = 'checkout_cart_configure';
+    public const string LAYOUT_CART_CONFIGURE_PAGE = 'checkout_cart_configure';
 
     /**
      * Return array of options as value-label pairs

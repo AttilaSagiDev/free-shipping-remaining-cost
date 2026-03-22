@@ -15,12 +15,12 @@ class Position implements OptionSourceInterface
     /**
      * Show notification in content top
      */
-    public const SHOW_ON_TOP = 0;
+    public const int SHOW_ON_TOP = 0;
 
     /**
      * Show notification in sidebar
      */
-    public const SHOW_IN_SIDEBAR = 1;
+    public const int SHOW_IN_SIDEBAR = 1;
 
     /**
      * Return array of options as value-label pairs
