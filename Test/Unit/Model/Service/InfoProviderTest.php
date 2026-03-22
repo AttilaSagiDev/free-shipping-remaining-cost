@@ -49,7 +49,6 @@ class InfoProviderTest extends TestCase
         $this->calculationHelperMock = $this->createMock(CalculationHelper::class);
         $this->quoteMock = $this->createMock(Quote::class);
 
-        // Using getMockBuilder for the magic method 'getFreeShipping'
         $this->addressMock = $this->getMockBuilder(Address::class)
             ->disableOriginalConstructor()
             ->addMethods(['getFreeShipping'])

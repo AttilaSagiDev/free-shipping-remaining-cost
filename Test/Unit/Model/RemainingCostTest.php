@@ -38,7 +38,7 @@ class RemainingCostTest extends TestCase
         $value = 5.50;
 
         $this->model->setValue($value);
-        // We cast to float to ensure type consistency
+
         $this->assertEquals($value, $this->model->getValue());
     }
 
