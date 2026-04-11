@@ -1,4 +1,10 @@
 <?php
+/**
+ * Copyright (c) 2026 Attila Sagi
+ * @license http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+declare(strict_types=1);
 
 namespace Space\FreeShippingRemainingCost\Plugin\Config\Model;
 
@@ -11,7 +17,7 @@ class ValidateConfigPlugin
     /**
      * Module's config section
      */
-    private const SECTION = 'free_shipping_remaining_cost_settings';
+    private const string SECTION = 'free_shipping_remaining_cost_settings';
 
     /**
      * Around save
