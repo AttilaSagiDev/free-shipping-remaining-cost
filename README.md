@@ -78,7 +78,7 @@ Category Page Position: Show in content top as message or Show in sidebar as blo
 
 ## Change Log ##
 
-Version 1.1.2 - Mar 22, 2026
+Version 1.1.2 - April 11, 2026
 - Add unit tests
 - PHP 8.4 upgrades
 - Small refactor
